@@ -30,7 +30,7 @@ fun Route.progressRoutes(questionRepository: QuestionRepository) {
         call.respond(SubmitAnswerResponse(
             isCorrect = isCorrect,
             correctAnswer = question.correctAnswer ?: 0,
-            message = if (isCorrect) "Resposta correta! 🎉" else "Tente novamente!"
+            message = if (isCorrect) "Resposta correta! " else "Tente novamente!"
         ))
     }
 

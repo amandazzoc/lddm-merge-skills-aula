@@ -43,4 +43,18 @@ in your IDE’s toolbar or run it directly from the terminal:
 
 ---
 
+# Catalog  `gradle/libs.versions.toml`
+
+```
+ktor-server-swagger = { module = "io.ktor:ktor-server-swagger-jvm", version.ref = "ktor" }
+ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages-jvm", version.ref = "ktor" }
+```
+
+# Catalog  `server/build.gradle.kts`
+
+```
+implementation(libs.ktor.server.swagger)
+implementation(libs.ktor.server.status.pages)
+```
+
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
