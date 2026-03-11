@@ -25,6 +25,12 @@ fun main() {
 }
 
 fun Application.module() {
+    val useSupabase = System.getenv("USE_SUPABASE")?.toBoolean() ?: false
+
+    if (!useSupabase) {
+        DatabaseFactory.init() // Engine Local
+    }
+
     install(ContentNegotiation) { json() }
     install(StatusPages) {
         exception<Throwable> { call, cause ->
@@ -36,9 +42,21 @@ fun Application.module() {
     DatabaseFactory.init()
 
     //  Instanciando os repositórios (Exposed = banco real)
-    val courseRepository = ExposedCourseRepository()
-    val lessonRepository = ExposedLessonRepository()
-    val questionRepository = ExposedQuestionRepository()
+    val courseRepository: com.fatec.lddm_merge_skills.repository.CourseRepository
+    val lessonRepository: com.fatec.lddm_merge_skills.repository.LessonRepository
+    val questionRepository: com.fatec.lddm_merge_skills.repository.QuestionRepository
+
+    if (useSupabase) {
+        courseRepository = com.fatec.lddm_merge_skills.db.SupabaseCourseRepository()
+        lessonRepository = com.fatec.lddm_merge_skills.db.SupabaseLessonRepository()
+        questionRepository = com.fatec.lddm_merge_skills.db.SupabaseQuestionRepository()
+        println("\n Usando banco na nuvem: Supabase (PostgREST)")
+    } else {
+        courseRepository = ExposedCourseRepository()
+        lessonRepository = ExposedLessonRepository()
+        questionRepository = ExposedQuestionRepository()
+        println("\n Usando banco local: Docker (PostgreSQL + Exposed)")
+    }
 
     routing {
         get("/") { call.respondText("Ktor: ${Greeting().greet()}") }
