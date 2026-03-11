@@ -38,4 +38,9 @@ dependencies {
 
     // Interação oficial JDBC
     implementation(libs.postgresql)
+
+    // === Semana 03: Swagger UI + Status Pages ===
+    implementation(libs.ktor.server.swagger)
+    implementation(libs.ktor.server.status.pages)
+    implementation(libs.ktor.server.cors)
 }
