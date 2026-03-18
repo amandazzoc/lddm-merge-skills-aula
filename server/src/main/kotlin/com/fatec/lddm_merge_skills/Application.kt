@@ -66,7 +66,7 @@ fun Application.module() {
 
         // Passando os repositórios para as rotas
         courseRoutes(courseRepository, lessonRepository)
-        lessonRoutes(questionRepository)
+        lessonRoutes(lessonRepository, questionRepository)
         questionRoutes(questionRepository)
         progressRoutes(questionRepository)
     }
