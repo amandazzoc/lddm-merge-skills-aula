@@ -78,7 +78,7 @@ data class QuestionInsertDTO(
         builder[Questions.lessonId] = lessonId
         builder[Questions.question] = question
         builder[Questions.code] = code
-        builder[Questions.options] = Json.encodeToString(options)
+        builder[Questions.options] = options
         builder[Questions.correctAnswer] = correctAnswer
         builder[Questions.order] = order
     }
@@ -86,21 +86,12 @@ data class QuestionInsertDTO(
 
 fun Question.toInsertDTO() = QuestionInsertDTO(lessonId, question, code, options, correctAnswer, order)
 
-fun ResultRow.toQuestion(): Question {
-    val optionsJson = this[Questions.options]
-    val optionsList: List<String> = try {
-        Json.decodeFromString(optionsJson)
-    } catch (e: Exception) {
-        emptyList()
-    }
-
-    return Question(
-        id = this[Questions.id].value,
-        lessonId = this[Questions.lessonId].value,
-        question = this[Questions.question],
-        code = this[Questions.code],
-        options = optionsList,
-        correctAnswer = this[Questions.correctAnswer],
-        order = this[Questions.order]
-    )
-}
+fun ResultRow.toQuestion() = Question(
+    id = this[Questions.id].value,
+    lessonId = this[Questions.lessonId].value,
+    question = this[Questions.question],
+    code = this[Questions.code],
+    options = this[Questions.options],
+    correctAnswer = this[Questions.correctAnswer],
+    order = this[Questions.order]
+)
