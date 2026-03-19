@@ -127,7 +127,6 @@ paths:
         '400':
           description: ID inválido fornecido
 
-
   /lessons:
     post:
       tags:
